@@ -362,6 +362,9 @@ endif
 " Load plugins {{{
 call plug#begin('~/.vim/plugged')
 
+" Sessions
+Plug 'xolox/vim-session'
+
 " Git stuffs
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
