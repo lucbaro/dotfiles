@@ -161,8 +161,8 @@ noremap <leader>w :bdelete<CR>
 " Switch in a buffer by name
 noremap <leader>b :Buffers<CR>
 
-nnoremap <CR> <C-]>
-nnoremap <BS> <C-T>
+" nnoremap <CR> <C-]>
+" nnoremap <BS> <C-T>
 
 " Paste mode {{{
 " https://coderwall.com/p/if9mda/automatically-set-paste-mode-in-vim-when-pasting-in-insert-mode
