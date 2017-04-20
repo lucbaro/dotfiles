@@ -198,6 +198,17 @@ function! HasColorscheme(name)
   return !empty(globpath(&rtp, 'colors/'.a:name.'.vim'))
 endfunction
 
+" Build YouCompleteMe after install
+function! BuildYCM(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !./install.py
+  endif
+endfunction
+
 " Plugin Configuration -------------------------------------------------------------
 
 " Airline.vim {{{
@@ -392,7 +403,7 @@ Plug 'scrooloose/nerdcommenter'
 
 " Autocompletion & matching
 if v:version >= 704 || (v:version == 704 && has("patch143"))
-  Plug 'Valloric/YouCompleteMe'
+  Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 endif
 if has('python')
   Plug 'Valloric/MatchTagAlways'
