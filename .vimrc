@@ -391,8 +391,12 @@ Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
 
 " Autocompletion & matching
-Plug 'Valloric/YouCompleteMe'
-Plug 'Valloric/MatchTagAlways'
+if has("patch-7.4-143")
+  Plug 'Valloric/YouCompleteMe'
+endif
+if has('python')
+  Plug 'Valloric/MatchTagAlways'
+endif
 
 " Tags
 " Plug 'xolox/vim-easytags'
