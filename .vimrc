@@ -96,8 +96,13 @@ set nowritebackup
 set nobackup
 " Swap files and undo files location
 set swapfile
-set dir=~/tmp
-set udir=~/tmp
+" Create directory if not exists
+if empty(glob("~/.vim/.tmp"))
+  call mkdir($HOME."/.vim/.tmp", "p")
+endif
+
+set dir=~/.vim/.tmp
+set udir=~/.vim/.tmp
 " FZF
 set rtp+=~/.fzf
 " }}}
@@ -188,6 +193,10 @@ function! ResCur()
     endif
 endfunction
 
+" Check for colorscheme existence
+function! HasColorscheme(name)
+  return !empty(globpath(&rtp, 'colors/'.a:name.'.vim'))
+endfunction
 
 " Plugin Configuration -------------------------------------------------------------
 
@@ -205,33 +214,35 @@ augroup END
 " }}}
 
 " Syntastic.vim {{{
-augroup syntastic_config
-  autocmd!
-  let g:syntastic_error_symbol = '✗'
-  let g:syntastic_warning_symbol = '⚠'
+if exists("*SyntasticStatuslineFlag")
+  augroup syntastic_config
+    autocmd!
+    let g:syntastic_error_symbol = '✗'
+    let g:syntastic_warning_symbol = '⚠'
 
-  " Swift
-  let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
-  " PHP
-  let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
-  " JS
-  let g:syntastic_javascript_checkers = ['eslint']
-  " SQL
-  let g:syntastic_sql_checkers = ['sqlint']
-  "let g:syntastic_Handlebars_checkers = ['handlebars']
+    " Swift
+    let g:syntastic_swift_checkers = ['swiftpm', 'swiftlint']
+    " PHP
+    let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+    " JS
+    let g:syntastic_javascript_checkers = ['eslint']
+    " SQL
+    let g:syntastic_sql_checkers = ['sqlint']
+    "let g:syntastic_Handlebars_checkers = ['handlebars']
 
-  let g:syntastic_mode_map = { 'mode': 'active',
-        \ 'active_filetypes': ['javascript', 'sql'],
-        \ 'passive_filetypes': [] }
-  set statusline+=%#warningmsg#
-  set statusline+=%{SyntasticStatuslineFlag()}
-  set statusline+=%*
+    let g:syntastic_mode_map = { 'mode': 'active',
+          \ 'active_filetypes': ['javascript', 'sql'],
+          \ 'passive_filetypes': [] }
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
 
-  let g:syntastic_always_populate_loc_list = 1
-  let g:syntastic_auto_loc_list = 1
-  let g:syntastic_check_on_open = 1
-  let g:syntastic_check_on_wq = 0
-augroup END
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
+  augroup END
+endif
 " }}}
 
 " vim-github-dashboard {{{
@@ -347,16 +358,15 @@ augroup vimrc
   au Filetype javascript,javascript.jsx setlocal ts=4 sts=4 sw=4
 augroup END
 
-
 " Plugins -------------------------------------------------------------
 
 " Install vim-plug if we don't already have it
 if empty(glob("~/.vim/autoload/plug.vim"))
     " Ensure all needed directories exist  (Thanks @kapadiamush)
-    execute 'mkdir -p ~/.vim/plugged'
-    execute 'mkdir -p ~/.vim/autoload'
+    silent !mkdir -p ~/.vim/plugged > /dev/null 2>&1
+    silent !mkdir -p ~/.vim/autoload > /dev/null 2>&1
     " Download the actual plugin manager
-    execute '!curl -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+    silent !curl -sfLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 
 " Load plugins {{{
@@ -430,8 +440,10 @@ call plug#end()
 " }}}
 
 " Theme ------------------------------------------------------------------------
-colorscheme onedark
-" colorscheme badwolf
+if HasColorscheme('onedark')
+  colorscheme onedark
+  " colorscheme badwolf
+endif
 
 " Override some styles ---
 " BG color
