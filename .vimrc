@@ -391,7 +391,7 @@ Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
 
 " Autocompletion & matching
-if has("patch-7.4-143")
+if v:version >= 704 || (v:version == 704 && has("patch143"))
   Plug 'Valloric/YouCompleteMe'
 endif
 if has('python')
