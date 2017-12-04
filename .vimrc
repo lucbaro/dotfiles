@@ -418,6 +418,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 
 " Formatting
 Plug 'editorconfig/editorconfig-vim'
