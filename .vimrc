@@ -142,7 +142,8 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gl :Glog<CR>
 nnoremap <leader>gc :Gcommit<CR>
-nnoremap <leader>gp :Git push<CR>
+nnoremap <leader>gph :Git push<CR>
+nnoremap <leader>gpl :Git pl<CR>
 
 " Save and source current file
 nnoremap <leader>ss :w<CR> :source %<CR>
