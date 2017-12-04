@@ -11,6 +11,7 @@ syntax on
 " Set some junk {{{
 set autoindent " Copy indent from last line when starting new line
 set backspace=indent,eol,start
+set clipboard=unnamed "Enable clipboard sharing cf. http://vim.wikia.com/wiki/Mac_OS_X_clipboard_sharing
 set cursorline " Highlight current line
 set diffopt=filler " Add vertical spaces to keep right and left aligned
 set diffopt+=iwhite " Ignore whitespace changes (focus on code changes)
@@ -146,6 +147,12 @@ nnoremap <leader>gp :Git push<CR>
 " Save and source current file
 nnoremap <leader>ss :w<CR> :source %<CR>
 nnoremap <leader>vc :e ~/.vimrc<CR>
+
+" Clipboard
+" Copy current line
+nmap <leader>cl :.w !pbcopy<CR><CR>
+" Copy whole file content
+nmap <leader>cf :%w !pbcopy<CR><CR>
 
 " Plug shortcuts
 nnoremap <leader>pi :PlugInstall<CR>
