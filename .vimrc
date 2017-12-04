@@ -352,23 +352,6 @@ if ! has('gui_running')
 endif
 " }}}
 
-" VIMRC AUTOCMD -------------------------------------------------------
-augroup vimrc
-  autocmd!
-  " Automatically source VIMRC when writing it
-  "au BufWritePost $MYVIMRC source $MYVIMRC " /!\ Bug in vim airline
-  " Restore Last cursor position
-  au BufWinEnter * call ResCur()
-  " Set syntax MySQL when opening sql files
-  au BufNewFile,BufRead *.sql set syntax=mysql
-  " Handle MySQL CLI editor which opens buffer with pattern path is /tmp/sql*
-  au BufNewFile,BufRead /tmp/sql* set syntax=mysql
-  " Strip whitespaces automatically when saving PHP/JS files
-  au FileType php,javascript au BufWritePre <buffer> StripWhitespace
-  " Set indentation per filetype
-  au Filetype javascript,javascript.jsx setlocal ts=4 sts=4 sw=4
-augroup END
-
 " Plugins -------------------------------------------------------------
 
 " Install vim-plug if we don't already have it
@@ -453,6 +436,25 @@ Plug 'cespare/vim-toml'
 " }
 call plug#end()
 " }}}
+
+" VIMRC AUTOCMD -------------------------------------------------------
+augroup vimrc
+  autocmd!
+  " Automatically source VIMRC when writing it
+  "au BufWritePost $MYVIMRC source $MYVIMRC " /!\ Bug in vim airline
+  " Restore Last cursor position
+  au BufWinEnter * call ResCur()
+  " Set syntax MySQL when opening sql files
+  au BufNewFile,BufRead *.sql set syntax=mysql
+  " Handle MySQL CLI editor which opens buffer with pattern path is /tmp/sql*
+  au BufNewFile,BufRead /tmp/sql* set syntax=mysql
+  " Strip whitespaces automatically when saving PHP/JS files
+  au FileType php,javascript au BufWritePre <buffer> StripWhitespace
+  " Set indentation per filetype
+  au Filetype javascript,javascript.jsx setlocal ts=4 sts=4 sw=4
+  au Filetype python set sw=2
+  au Filetype python set ts=2
+augroup END
 
 " Theme ------------------------------------------------------------------------
 if HasColorscheme('onedark')
